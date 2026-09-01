@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>月詠茶寮 -TSUKUYOMI SARYO- | 今日のあなたに、宇宙が選ぶ一杯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600;900&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0b1224;
+    --navy:#111a33;
+    --navy-light:#1c2846;
+    --cream:#f6f1e4;
+    --cream-dim:#d9d2bd;
+    --gold:#c9a45c;
+    --gold-bright:#e8c887;
+    --line:rgba(201,164,92,0.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:88px;}
+  body{
+    font-family:"Shippori Mincho","Zen Old Mincho",serif;
+    background:var(--navy-deep);
+    color:var(--cream);
+    line-height:1.9;
+    letter-spacing:0.02em;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-size:0.78rem;
+    letter-spacing:0.32em;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+  h1,h2,h3{font-family:"Zen Old Mincho",serif;font-weight:600;letter-spacing:0.05em;}
+  .gold{color:var(--gold-bright);}
+  .btn{
+    display:inline-block;
+    padding:16px 40px;
+    border:1px solid var(--gold);
+    color:var(--gold-bright);
+    background:transparent;
+    border-radius:999px;
+    font-size:0.95rem;
+    letter-spacing:0.12em;
+    cursor:pointer;
+    font-family:inherit;
+    transition:all .35s ease;
+  }
+  .btn:hover{background:var(--gold);color:var(--navy-deep);}
+  .btn.solid{background:var(--gold);color:var(--navy-deep);}
+  .btn.solid:hover{background:var(--gold-bright);}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;
+    background:rgba(11,18,36,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(201,164,92,0.15);
+  }
+  .brand{font-family:"Zen Old Mincho",serif;font-size:1.15rem;letter-spacing:0.18em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .brand span{color:var(--gold);}
+  .header-right{display:flex;align-items:center;}
+  nav a{margin-left:28px;font-size:0.85rem;letter-spacing:0.08em;color:var(--cream-dim);}
+  nav a:hover{color:var(--gold-bright);}
+  #cart-count{
+    margin-left:26px;border:1px solid var(--line);border-radius:999px;
+    padding:4px 14px;font-size:0.8rem;color:var(--gold-bright);white-space:nowrap;
+  }
+  .nav-toggle{
+    display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:32px;height:28px;margin-left:18px;background:none;border:none;
+    cursor:pointer;padding:0;
+  }
+  .nav-toggle span{display:block;width:100%;height:2px;background:var(--gold-bright);transition:all .3s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    background:radial-gradient(ellipse at 50% 20%, #1b2748 0%, #0b1224 55%, #060a16 100%);
+    overflow:hidden;
+  }
+  .stars{position:absolute;inset:0;}
+  .star{
+    position:absolute;background:var(--cream);border-radius:50%;
+    animation:twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:0.15;}
+    50%{opacity:1;}
+  }
+  .moon-glow{
+    position:absolute;top:8%;right:14%;
+    width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, var(--gold-bright), var(--gold) 45%, transparent 70%);
+    box-shadow:0 0 120px 40px rgba(201,164,92,0.25);
+    animation:float 10s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-18px);}
+  }
+  .hero-inner{position:relative;z-index:2;padding-top:60px;}
+  .hero h1{
+    font-size:clamp(2.2rem,5.5vw,3.6rem);
+    margin:22px 0 14px;
+    color:var(--cream);
+  }
+  .hero p.copy{
+    font-size:1.05rem;color:var(--cream-dim);max-width:560px;margin:0 auto 36px;
+  }
+  .constellation-line{
+    width:1px;height:70px;background:linear-gradient(var(--gold), transparent);
+    margin:0 auto 24px;
+  }
+
+  section{padding:110px 0;position:relative;scroll-margin-top:88px;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 56px;}
+  .section-head h2{font-size:clamp(1.6rem,3.5vw,2.3rem);margin-top:10px;}
+  .section-head p{color:var(--cream-dim);margin-top:14px;font-size:0.95rem;}
+
+  /* ---------- Cosmos today ---------- */
+  .cosmos{
+    background:linear-gradient(180deg,#0b1224,#0d1530 60%,#0b1224);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .cosmos-card{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:56px;
+  }
+  .moon-visual{
+    width:150px;height:150px;border-radius:50%;position:relative;flex-shrink:0;
+    background:#0e1730;border:1px solid var(--line);
+    box-shadow:inset 0 0 40px rgba(0,0,0,0.6);
+  }
+  .moon-visual .lit{
+    position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, var(--gold-bright), var(--gold) 60%, #7a622f 100%);
+  }
+  .moon-visual .shadow{
+    position:absolute;inset:0;border-radius:50%;background:#0b1224;
+  }
+  .cosmos-text{max-width:420px;}
+  .cosmos-text .phase-name{font-size:1.6rem;color:var(--gold-bright);margin-bottom:10px;}
+  .cosmos-text .phase-msg{color:var(--cream-dim);font-size:0.98rem;}
+  .cosmos-text .date{font-size:0.8rem;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px;}
+
+  /* ---------- Quiz ---------- */
+  .quiz-box{
+    max-width:680px;margin:0 auto;
+    border:1px solid var(--line);border-radius:18px;
+    padding:44px 36px;background:linear-gradient(180deg, rgba(28,40,70,0.5), rgba(11,18,36,0.4));
+  }
+  .quiz-step{display:none;}
+  .quiz-step.active{display:block;animation:fadein .5s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .quiz-progress{
+    display:flex;gap:8px;justify-content:center;margin-bottom:34px;
+  }
+  .quiz-progress span{
+    width:34px;height:3px;background:var(--line);border-radius:2px;
+  }
+  .quiz-progress span.done{background:var(--gold);}
+  .quiz-step h3{text-align:center;font-size:1.2rem;margin-bottom:8px;}
+  .quiz-step .qsub{text-align:center;color:var(--cream-dim);font-size:0.85rem;margin-bottom:30px;}
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .options button{
+    font-family:inherit;background:rgba(255,255,255,0.02);
+    border:1px solid var(--line);color:var(--cream);
+    padding:20px 14px;border-radius:12px;cursor:pointer;font-size:0.95rem;
+    transition:all .25s ease;
+  }
+  .options button:hover{border-color:var(--gold);background:rgba(201,164,92,0.08);transform:translateY(-2px);}
+  .month-select{
+    display:flex;flex-direction:column;align-items:center;gap:20px;
+  }
+  select{
+    font-family:inherit;background:var(--navy-light);color:var(--cream);
+    border:1px solid var(--line);padding:12px 20px;border-radius:10px;font-size:1rem;
+  }
+  .quiz-back{
+    text-align:center;margin-top:26px;font-size:0.8rem;color:var(--cream-dim);cursor:pointer;
+  }
+  .quiz-back:hover{color:var(--gold);}
+
+  /* ---------- Result ---------- */
+  .result-box{display:none;text-align:center;}
+  .result-box.active{display:block;animation:fadein .6s ease;}
+  .result-tea-icon{font-size:3.4rem;margin-bottom:14px;}
+  .result-box h3{font-size:1.5rem;color:var(--gold-bright);margin-bottom:6px;}
+  .result-tags{margin:10px 0 22px;}
+  .result-tags span{
+    display:inline-block;border:1px solid var(--gold);color:var(--gold);
+    border-radius:999px;padding:4px 14px;font-size:0.75rem;margin:0 4px;
+  }
+  .result-story{
+    text-align:left;color:var(--cream-dim);font-size:0.95rem;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:22px 4px;margin:20px 0 28px;
+  }
+
+  /* ---------- Products ---------- */
+  .products{background:var(--navy-deep);}
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:26px;
+  }
+  .tea-card{
+    border:1px solid var(--line);border-radius:16px;padding:26px 20px;
+    background:linear-gradient(180deg, rgba(28,40,70,0.35), rgba(11,18,36,0.2));
+    text-align:center;transition:all .4s ease;position:relative;
+  }
+  .tea-card.highlight{
+    border-color:var(--gold);box-shadow:0 0 0 1px var(--gold), 0 20px 40px rgba(201,164,92,0.15);
+    transform:translateY(-6px);
+  }
+  .tea-card .badge{
+    position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+    background:var(--gold);color:var(--navy-deep);font-size:0.7rem;
+    padding:4px 12px;border-radius:999px;letter-spacing:0.08em;
+  }
+  .tea-icon{font-size:2.6rem;margin-bottom:14px;}
+  .tea-card h4{font-size:1.05rem;margin-bottom:6px;color:var(--cream);}
+  .tea-card .zodiac{font-size:0.75rem;color:var(--gold);letter-spacing:0.06em;margin-bottom:10px;}
+  .tea-card .desc{font-size:0.82rem;color:var(--cream-dim);min-height:58px;}
+  .tea-tags{margin:14px 0;}
+  .tea-tags span{
+    display:inline-block;font-size:0.68rem;border:1px solid var(--line);
+    color:var(--cream-dim);padding:3px 9px;border-radius:999px;margin:2px 2px;
+  }
+  .price{font-size:1.05rem;color:var(--gold-bright);margin:12px 0 16px;letter-spacing:0.04em;}
+  .add-btn{
+    width:100%;padding:11px;border-radius:999px;border:1px solid var(--gold);
+    background:transparent;color:var(--gold-bright);font-family:inherit;cursor:pointer;
+    font-size:0.82rem;letter-spacing:0.06em;transition:all .3s ease;
+  }
+  .add-btn:hover{background:var(--gold);color:var(--navy-deep);}
+  .add-btn.added{background:var(--gold);color:var(--navy-deep);}
+
+  /* ---------- Sampler CTA ---------- */
+  .sampler{
+    background:linear-gradient(135deg,#161f3c,#0b1224);
+    border:1px solid var(--line);border-radius:24px;
+    padding:56px 40px;text-align:center;max-width:820px;margin:0 auto;
+  }
+  .sampler .tea-icon{font-size:3rem;}
+  .sampler h3{font-size:1.6rem;margin:14px 0 10px;color:var(--gold-bright);}
+  .sampler p{color:var(--cream-dim);max-width:480px;margin:0 auto 26px;}
+  .sampler .price{font-size:1.3rem;}
+
+  footer{
+    text-align:center;padding:50px 24px;color:var(--cream-dim);font-size:0.78rem;
+    border-top:1px solid var(--line);letter-spacing:0.05em;
+  }
+  footer .brand{margin-bottom:10px;display:block;}
+
+  .toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--gold);color:var(--navy-deep);padding:12px 26px;border-radius:999px;
+    font-size:0.85rem;opacity:0;pointer-events:none;transition:all .35s ease;z-index:99;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:900px){
+    header .brand{font-size:1rem;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .options{grid-template-columns:1fr;}
+    .nav-toggle{display:flex;}
+    nav{
+      display:flex;flex-direction:column;
+      position:fixed;top:64px;left:0;right:0;
+      background:var(--navy-deep);
+      border-bottom:1px solid var(--line);
+      padding:6px 24px 12px;
+      transform:translateY(-120%);opacity:0;pointer-events:none;
+      transition:all .3s ease;
+    }
+    nav.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+    nav a{
+      margin-left:0;padding:14px 0;font-size:0.95rem;
+      border-bottom:1px solid var(--line);
+    }
+    nav a:last-child{border-bottom:none;}
+    .cosmos-card{flex-direction:column;text-align:center;}
+  }
+  @media (max-width:520px){
+    header .brand span{display:none;}
+    header .brand{font-size:0.95rem;letter-spacing:0.1em;}
+    .grid{grid-template-columns:1fr;}
+    section{padding:80px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">月詠茶寮 <span>-TSUKUYOMI SARYO-</span></div>
+  <div class="header-right">
+    <nav id="mainNav">
+      <a href="#cosmos">今日の宇宙</a>
+      <a href="#quiz">お茶診断</a>
+      <a href="#products">お茶一覧</a>
+    </nav>
+    <span id="cart-count">カート 0</span>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="stars" id="stars"></div>
+  <div class="moon-glow"></div>
+  <div class="hero-inner wrap">
+    <p class="eyebrow">MOON &amp; STAR BLENDED TEA</p>
+    <div class="constellation-line"></div>
+    <h1>今日のあなたに、<br>宇宙が選ぶ一杯。</h1>
+    <p class="copy">月の満ち欠けと、あなたの生まれた星座。そのふたつが重なる今日という日に、一番寄り添うお茶をお淹れします。</p>
+    <a href="#quiz" class="btn solid">今日のお茶を診断する</a>
+  </div>
+</section>
+
+<!-- ============ COSMOS TODAY ============ -->
+<section class="cosmos" id="cosmos">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Today's Cosmos</p>
+      <h2>今日の<span class="gold">月</span></h2>
+    </div>
+    <div class="cosmos-card">
+      <div class="moon-visual" id="moonVisual">
+        <div class="lit"></div>
+        <div class="shadow" id="moonShadow"></div>
+      </div>
+      <div class="cosmos-text">
+        <p class="date" id="todayDate"></p>
+        <p class="phase-name" id="phaseName">—</p>
+        <p class="phase-msg" id="phaseMsg">今、空を見上げている月を計算しています…</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Tea Divination</p>
+      <h2>お茶<span class="gold">診断</span></h2>
+      <p>4つの問いに答えると、今日の月とあなたの星座が重なり合う一杯が見えてきます。</p>
+    </div>
+
+    <div class="quiz-box">
+      <div class="quiz-progress" id="quizProgress">
+        <span data-step="0"></span><span data-step="1"></span><span data-step="2"></span><span data-step="3"></span>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="quiz-step active" data-step="0">
+        <h3>Q1. 今日の気分に近いのは？</h3>
+        <p class="qsub">直感で選んでください</p>
+        <div class="options">
+          <button data-q="mood" data-v="安らぎ">ざわざわして落ち着かない</button>
+          <button data-q="mood" data-v="巡り">なんとなくどんより</button>
+          <button data-q="mood" data-v="落ち着き">気持ちが高ぶっている</button>
+          <button data-q="mood" data-v="軽やか">わりとぽかぽか穏やか</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="quiz-step" data-step="1">
+        <h3>Q2. 体の調子はどうですか？</h3>
+        <p class="qsub">一番近いものを選んでください</p>
+        <div class="options">
+          <button data-q="body" data-v="眠り">夜、よく眠れていない</button>
+          <button data-q="body" data-v="胃腸">胃腸が重い・もたれる</button>
+          <button data-q="body" data-v="巡り">手足が冷えている</button>
+          <button data-q="body" data-v="集中">とにかくだるい・眠い</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="quiz-step" data-step="2">
+        <h3>Q3. 今日、どうなりたいですか？</h3>
+        <p class="qsub">なりたい自分を選んでください</p>
+        <div class="options">
+          <button data-q="wish" data-v="眠り">ゆっくり休みたい</button>
+          <button data-q="wish" data-v="集中">頭をすっきりさせたい</button>
+          <button data-q="wish" data-v="整える">心とからだを整えたい</button>
+          <button data-q="wish" data-v="情熱">ときめきを取り戻したい</button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="quiz-step" data-step="3">
+        <h3>Q4. あなたの生まれ月は？</h3>
+        <p class="qsub">星座を重ね合わせます</p>
+        <div class="month-select">
+          <select id="birthMonth">
+            <option value="">選択してください</option>
+            <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+            <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+            <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+            <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+          </select>
+          <button class="btn solid" id="showResult">占う</button>
+        </div>
+      </div>
+
+      <div class="quiz-back" id="quizBack" style="display:none;">← ひとつ前に戻る</div>
+
+      <!-- Result -->
+      <div class="result-box" id="resultBox">
+        <div class="result-tea-icon" id="resultIcon">🌙</div>
+        <p class="eyebrow" id="resultZodiac">—</p>
+        <h3 id="resultName">—</h3>
+        <div class="result-tags" id="resultTags"></div>
+        <p class="result-story" id="resultStory"></p>
+        <a href="#products" class="btn solid" id="resultScroll">このお茶を見る</a>
+        <p class="quiz-back" id="retryQuiz" style="margin-top:22px;">もう一度診断する</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Tea Collection</p>
+      <h2>お茶<span class="gold">一覧</span></h2>
+      <p>月と星座から生まれた、8種のブレンド。診断結果と重なるお茶は金色に浮かび上がります。</p>
+    </div>
+    <div class="grid" id="teaGrid"></div>
+
+    <div style="height:70px;"></div>
+
+    <div class="sampler">
+      <div class="tea-icon">🎁</div>
+      <h3>まずは3種お試しサンプラー</h3>
+      <p>どれを選べばいいか迷ったら。今月の月と相性の良い3種を、小さなパッケージでお届けします。</p>
+      <p class="price">¥1,980<span style="font-size:0.7rem;color:var(--cream-dim);"> / 送料込</span></p>
+      <button class="btn solid" id="addSampler">サンプラーをカートに入れる</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">月詠茶寮 <span class="gold">-TSUKUYOMI SARYO-</span></span>
+  本サイトはデモンストレーション用の架空ブランドです。実際の決済・配送は行われません。<br>
+  © 2026 Tsukuyomi Saryo. All rights reserved.
+</footer>
+
+<div class="toast" id="toast">カートに追加しました</div>
+
+<script>
+/* =====================================================
+   -1. モバイル用ハンバーガーメニュー
+===================================================== */
+(function initNavToggle(){
+  const navToggle = document.getElementById('navToggle');
+  const mainNav = document.getElementById('mainNav');
+  function closeNav(){
+    mainNav.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+  navToggle.addEventListener('click', ()=>{
+    const isOpen = mainNav.classList.toggle('open');
+    navToggle.classList.toggle('active', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  mainNav.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeNav));
+})();
+
+/* =====================================================
+   0. 星空の生成
+===================================================== */
+(function generateStars(){
+  const box = document.getElementById('stars');
+  const count = 90;
+  for(let i=0;i<count;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2 + 1;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.top = Math.random()*100+'%';
+    s.style.left = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*4)+'s';
+    s.style.animationDuration = (3+Math.random()*3)+'s';
+    box.appendChild(s);
+  }
+})();
+
+/* =====================================================
+   1. 月相計算
+   簡略化: 既知の新月基準日(2000-01-06 18:14 UTC)からの経過日数を
+   朔望月周期(29.53059日)で割った余りから8相を判定する簡易モデル。
+   実際の天文暦(視差・軌道離心率等)は考慮していないため、暦の日付は
+   実際の月齢と最大1日程度ずれる場合がある。厳密な値が必要な場合は
+   NASA/国立天文台の月相APIまたは天文計算ライブラリに置き換えること。
+===================================================== */
+function getMoonPhase(date){
+  const knownNewMoon = new Date(Date.UTC(2000,0,6,18,14,0));
+  const synodicMonth = 29.53058867;
+  const diffDays = (date - knownNewMoon) / 86400000;
+  let phaseAge = diffDays % synodicMonth;
+  if(phaseAge < 0) phaseAge += synodicMonth;
+  const ratio = phaseAge / synodicMonth; // 0〜1
+
+  const phases = [
+    { name:'新月',     tag:'始まり', msg:'すべてがまっさらな夜。新しい一歩を静かに選ぶ日。' },
+    { name:'三日月',   tag:'軽やか', msg:'小さな光が育ち始める頃。軽やかな気持ちで動き出せる日。' },
+    { name:'上弦の月', tag:'集中',   msg:'月が半分に満ちる、力の乗る夜。集中力が高まりやすい日。' },
+    { name:'十三夜月', tag:'情熱',   msg:'満月まであと少し。高まる気持ちを味方につける日。' },
+    { name:'満月',     tag:'眠り',   msg:'月が最も満ちる夜。感情が揺れやすいので、休息を優先したい日。' },
+    { name:'十六夜月', tag:'美容',   msg:'満ちた月が少しずつ姿を変える頃。内側から整えたい日。' },
+    { name:'下弦の月', tag:'整える', msg:'月が半分に欠ける、手放しの夜。心身を整えるのに向く日。' },
+    { name:'暁月',     tag:'落ち着き', msg:'次の新月に向かう静かな夜。落ち着いて内省するのに向く日。' }
+  ];
+
+  // 各相の代表点(k/8)を中心に、その前後半分ずつを同じ相の範囲とする。
+  // 単純に「代表点以上なら次の相」という区切り方だと、満月など「点」で
+  // 定義される相が実際の瞬間より最大3.7日も後まで表示され続けてしまう
+  // (例: 2026-09-01は実際の満月(8/27頃)から5日経過し欠けていく途中なのに
+  // 「満月」と表示されるズレの原因だった)。境界を代表点の中間に置くことで
+  // これを解消する。
+  const index = Math.round(ratio * phases.length) % phases.length;
+  const current = phases[index];
+  return { ...current, ratio };
+}
+
+function renderMoon(){
+  const now = new Date();
+  const phase = getMoonPhase(now);
+  document.getElementById('todayDate').textContent =
+    now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日 の月';
+  document.getElementById('phaseName').textContent = phase.name;
+  document.getElementById('phaseMsg').textContent = phase.msg;
+
+  // 見た目の欠け具合(簡易表現): shadowをratioに応じて動かす
+  const shadow = document.getElementById('moonShadow');
+  const pct = phase.ratio; // 0新月 ~ 0.5満月 ~ 1新月
+  // 輝面率はcos曲線 (線形だと十六夜が半月に見える)。円弧形状は省略し陰の幅のみ表現
+  const illum = (1 - Math.cos(2 * Math.PI * pct)) / 2;
+  const dark = (1 - illum) * 100; // 陰が占める幅%
+  if(pct <= 0.5){
+    shadow.style.clipPath = `inset(0 ${100 - dark}% 0 0)`; // 満ちる月: 陰は左側
+  }else{
+    shadow.style.clipPath = `inset(0 0 0 ${100 - dark}%)`; // 欠ける月: 陰は右側
+  }
+  return phase;
+}
+const todaysPhase = renderMoon();
+
+/* =====================================================
+   2. 商品データ
+===================================================== */
+const TEAS = [
+  { id:'shinmagetsu', icon:'🌑', name:'新月ブレンド', zodiac:'天秤座・水瓶座向け',
+    desc:'クロモジと玄米の香ばしさ。何かを始めたい夜に。', tags:['巡り','始まり'], price:1800 },
+  { id:'mangetsu-camomile', icon:'🌕', name:'満月カモミール', zodiac:'牡牛座・魚座向け',
+    desc:'満ちた月の夜、頑張った心をそっとほどく一杯。', tags:['眠り','安らぎ'], price:1600 },
+  { id:'saffron-rose', icon:'🦂', name:'蠍座のサフランローズ', zodiac:'蠍座・獅子座向け',
+    desc:'サフランとローズの深紅。情熱を静かに灯す味わい。', tags:['美容','情熱'], price:2800 },
+  { id:'ginger-citrus', icon:'🐏', name:'牡羊座のジンジャーシトラス', zodiac:'牡羊座向け',
+    desc:'生姜と柑橘のきりっとした目覚め。巡りをよくする一杯。', tags:['巡り','集中'], price:1400 },
+  { id:'mint-bergamot', icon:'👯', name:'双子座のミントベルガモット', zodiac:'双子座・射手座向け',
+    desc:'ミントとベルガモットの軽やかな香り。頭をすっきりと。', tags:['集中','軽やか'], price:1200 },
+  { id:'gessho-milktea', icon:'🦀', name:'蟹座の月桃ミルクティー', zodiac:'蟹座向け',
+    desc:'月桃とミルクのやさしい甘さ。安心して眠りにつく夜に。', tags:['眠り','安らぎ'], price:2000 },
+  { id:'camomile-ginger', icon:'🌾', name:'乙女座のカモミールジンジャー', zodiac:'乙女座向け',
+    desc:'カモミールと生姜で、胃腸からじんわり整える一杯。', tags:['胃腸','整える'], price:1500 },
+  { id:'kuromame-hoji', icon:'🐐', name:'山羊座の黒豆ほうじ茶', zodiac:'山羊座向け',
+    desc:'香ばしいほうじ茶と黒豆の滋味。静かな落ち着きを。', tags:['巡り','落ち着き'], price:1700 }
+];
+
+function renderTeas(highlightId){
+  const grid = document.getElementById('teaGrid');
+  grid.innerHTML = '';
+  TEAS.forEach(tea=>{
+    const isHighlight = highlightId != null && tea.id === highlightId;
+    const card = document.createElement('div');
+    card.className = 'tea-card' + (isHighlight ? ' highlight' : '');
+    card.id = 'tea-'+tea.id;
+    card.dataset.teaId = tea.id;
+    card.innerHTML = `
+      ${isHighlight ? '<div class="badge">今日のあなたに</div>' : ''}
+      <div class="tea-icon">${tea.icon}</div>
+      <h4>${tea.name}</h4>
+      <p class="zodiac">${tea.zodiac}</p>
+      <p class="desc">${tea.desc}</p>
+      <div class="tea-tags">${tea.tags.map(t=>`<span>#${t}</span>`).join('')}</div>
+      <p class="price">¥${tea.price.toLocaleString()}</p>
+      <button class="add-btn" data-id="${tea.id}">カートに入れる</button>
+    `;
+    grid.appendChild(card);
+  });
+  bindAddButtons();
+}
+renderTeas(null);
+
+/* =====================================================
+   3. カート
+===================================================== */
+let cartCount = 0;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+function addToCart(label, btn){
+  cartCount++;
+  document.getElementById('cart-count').textContent = 'カート ' + cartCount;
+  showToast(label + ' をカートに入れました');
+  if(btn){
+    btn.classList.add('added');
+    const original = btn.textContent;
+    btn.textContent = '追加済み ✓';
+    setTimeout(()=>{ btn.classList.remove('added'); btn.textContent = original; }, 1400);
+  }
+}
+function bindAddButtons(){
+  document.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.onclick = ()=>{
+      const tea = TEAS.find(t=>t.id === btn.dataset.id);
+      addToCart(tea.name, btn);
+    };
+  });
+}
+document.getElementById('addSampler').addEventListener('click', function(){
+  addToCart('3種お試しサンプラー', this);
+});
+
+/* =====================================================
+   4. 星座算出（生まれ月ベースの簡略版）
+   本来は生年月日(日にち)まで必要だが、本デモでは月のみで代表的な
+   星座1つに割り当てる簡易モデル。厳密な境界日は考慮していない。
+===================================================== */
+const ZODIAC_BY_MONTH = {
+  1:'山羊座', 2:'水瓶座', 3:'魚座', 4:'牡羊座', 5:'牡牛座', 6:'双子座',
+  7:'蟹座', 8:'獅子座', 9:'乙女座', 10:'天秤座', 11:'蠍座', 12:'射手座'
+};
+const ZODIAC_TO_TEA = {
+  '牡羊座':'ginger-citrus', '牡牛座':'mangetsu-camomile', '双子座':'mint-bergamot',
+  '蟹座':'gessho-milktea', '獅子座':'saffron-rose', '乙女座':'camomile-ginger',
+  '天秤座':'shinmagetsu', '蠍座':'saffron-rose', '射手座':'mint-bergamot',
+  '山羊座':'kuromame-hoji', '水瓶座':'shinmagetsu', '魚座':'mangetsu-camomile'
+};
+
+/* =====================================================
+   5. 診断ロジック
+===================================================== */
+const quizAnswers = { mood:null, body:null, wish:null, month:null };
+let currentStep = 0;
+const totalSteps = 4;
+
+function updateProgress(){
+  document.querySelectorAll('#quizProgress span').forEach((el,i)=>{
+    el.classList.toggle('done', i <= currentStep);
+  });
+}
+function goToStep(n){
+  document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));
+  document.querySelector(`.quiz-step[data-step="${n}"]`).classList.add('active');
+  document.getElementById('quizBack').style.display = n === 0 ? 'none' : 'block';
+  document.getElementById('resultBox').classList.remove('active');
+  currentStep = n;
+  updateProgress();
+}
+document.querySelectorAll('.options button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    quizAnswers[btn.dataset.q] = btn.dataset.v;
+    if(currentStep < totalSteps - 1){
+      goToStep(currentStep + 1);
+    }
+  });
+});
+document.getElementById('quizBack').addEventListener('click', ()=>{
+  if(currentStep > 0) goToStep(currentStep - 1);
+});
+
+document.getElementById('showResult').addEventListener('click', ()=>{
+  const month = document.getElementById('birthMonth').value;
+  if(!month){
+    showToast('生まれ月を選んでください');
+    return;
+  }
+  quizAnswers.month = parseInt(month, 10);
+  runDivination();
+});
+
+function runDivination(){
+  const zodiac = ZODIAC_BY_MONTH[quizAnswers.month];
+  const zodiacTeaId = ZODIAC_TO_TEA[zodiac];
+  const moonTag = todaysPhase.tag;
+
+  const collectedTags = [quizAnswers.mood, quizAnswers.body, quizAnswers.wish];
+
+  const scores = TEAS.map(tea=>{
+    let score = 0;
+    collectedTags.forEach(tag=>{ if(tea.tags.includes(tag)) score += 1; });
+    if(tea.tags.includes(moonTag)) score += 1;
+    if(tea.id === zodiacTeaId) score += 3;
+    return { tea, score };
+  });
+
+  scores.sort((a,b)=> b.score - a.score);
+  const winner = scores[0].tea;
+
+  // 結果表示
+  document.getElementById('resultIcon').textContent = winner.icon;
+  document.getElementById('resultZodiac').textContent = zodiac + ' × ' + todaysPhase.name;
+  document.getElementById('resultName').textContent = winner.name;
+  document.getElementById('resultTags').innerHTML =
+    winner.tags.map(t=>`<span>#${t}</span>`).join('');
+
+  document.getElementById('resultStory').innerHTML =
+    `今夜の空は<strong class="gold">${todaysPhase.name}</strong>。${todaysPhase.msg}<br><br>` +
+    `${zodiac}生まれのあなたは、今日という日に<strong class="gold">${winner.name}</strong>と重なりました。` +
+    `${winner.desc}<br><br>` +
+    `月の巡りと星の巡り、そしてあなた自身の今日の心と体。そのすべてが指し示す一杯を、どうぞ静かな時間とともに。`;
+
+  document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('resultBox').classList.add('active');
+
+  document.getElementById('resultScroll').onclick = (e)=>{
+    e.preventDefault();
+    // ID(data-tea-id)で診断結果と商品カードを一意に照合してハイライトする
+    renderTeas(winner.id);
+    requestAnimationFrame(()=>{
+      const target = document.querySelector(`.tea-card[data-tea-id="${winner.id}"]`);
+      if(target){
+        target.scrollIntoView({ behavior:'smooth', block:'center' });
+      }else{
+        document.getElementById('products').scrollIntoView({ behavior:'smooth' });
+      }
+    });
+  };
+}
+
+document.getElementById('retryQuiz').addEventListener('click', ()=>{
+  quizAnswers.mood = null; quizAnswers.body = null; quizAnswers.wish = null; quizAnswers.month = null;
+  document.getElementById('birthMonth').value = '';
+  goToStep(0);
+});
+</script>
+</body>
+</html>
