@@ -70,10 +70,6 @@
   .header-right{display:flex;align-items:center;}
   nav a{margin-left:28px;font-size:0.85rem;letter-spacing:0.08em;color:var(--cream-dim);}
   nav a:hover{color:var(--gold-bright);}
-  #cart-count{
-    margin-left:26px;border:1px solid var(--line);border-radius:999px;
-    padding:4px 14px;font-size:0.8rem;color:var(--gold-bright);white-space:nowrap;
-  }
   .nav-toggle{
     display:none;flex-direction:column;justify-content:center;gap:5px;
     width:32px;height:28px;margin-left:18px;background:none;border:none;
@@ -230,7 +226,8 @@
     padding:4px 12px;border-radius:999px;letter-spacing:0.08em;
   }
   .tea-icon{font-size:2.6rem;margin-bottom:14px;}
-  .tea-card h4{font-size:1.05rem;margin-bottom:6px;color:var(--cream);}
+  .tea-card h4{font-size:1.05rem;margin-bottom:2px;color:var(--cream);}
+  .tea-card .product-name{font-size:0.78rem;color:var(--gold);letter-spacing:0.02em;margin-bottom:10px;}
   .tea-card .zodiac{font-size:0.75rem;color:var(--gold);letter-spacing:0.06em;margin-bottom:10px;}
   .tea-card .desc{font-size:0.82rem;color:var(--cream-dim);min-height:58px;}
   .tea-tags{margin:14px 0;}
@@ -238,14 +235,13 @@
     display:inline-block;font-size:0.68rem;border:1px solid var(--line);
     color:var(--cream-dim);padding:3px 9px;border-radius:999px;margin:2px 2px;
   }
-  .price{font-size:1.05rem;color:var(--gold-bright);margin:12px 0 16px;letter-spacing:0.04em;}
+  .buy-note{font-size:0.68rem;color:var(--cream-dim);margin-top:8px;}
   .add-btn{
-    width:100%;padding:11px;border-radius:999px;border:1px solid var(--gold);
+    display:block;width:100%;padding:11px;border-radius:999px;border:1px solid var(--gold);
     background:transparent;color:var(--gold-bright);font-family:inherit;cursor:pointer;
-    font-size:0.82rem;letter-spacing:0.06em;transition:all .3s ease;
+    font-size:0.82rem;letter-spacing:0.06em;transition:all .3s ease;text-align:center;
   }
   .add-btn:hover{background:var(--gold);color:var(--navy-deep);}
-  .add-btn.added{background:var(--gold);color:var(--navy-deep);}
 
   /* ---------- Sampler CTA ---------- */
   .sampler{
@@ -256,20 +252,13 @@
   .sampler .tea-icon{font-size:3rem;}
   .sampler h3{font-size:1.6rem;margin:14px 0 10px;color:var(--gold-bright);}
   .sampler p{color:var(--cream-dim);max-width:480px;margin:0 auto 26px;}
-  .sampler .price{font-size:1.3rem;}
 
   footer{
     text-align:center;padding:50px 24px;color:var(--cream-dim);font-size:0.78rem;
     border-top:1px solid var(--line);letter-spacing:0.05em;
   }
   footer .brand{margin-bottom:10px;display:block;}
-
-  .toast{
-    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:var(--gold);color:var(--navy-deep);padding:12px 26px;border-radius:999px;
-    font-size:0.85rem;opacity:0;pointer-events:none;transition:all .35s ease;z-index:99;
-  }
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  footer .disclaimer{display:block;margin-top:14px;font-size:0.72rem;color:var(--cream-dim);}
 
   @media (max-width:900px){
     header .brand{font-size:1rem;}
@@ -311,7 +300,6 @@
       <a href="#quiz">お茶診断</a>
       <a href="#products">お茶一覧</a>
     </nav>
-    <span id="cart-count">カート 0</span>
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
       <span></span><span></span><span></span>
     </button>
@@ -447,11 +435,10 @@
     <div style="height:70px;"></div>
 
     <div class="sampler">
-      <div class="tea-icon">🎁</div>
-      <h3>まずは3種お試しサンプラー</h3>
-      <p>どれを選べばいいか迷ったら。今月の月と相性の良い3種を、小さなパッケージでお届けします。</p>
-      <p class="price">¥1,980<span style="font-size:0.7rem;color:var(--cream-dim);"> / 送料込</span></p>
-      <button class="btn solid" id="addSampler">サンプラーをカートに入れる</button>
+      <div class="tea-icon">🍵</div>
+      <h3 id="samplerTitle">まず一杯から</h3>
+      <p id="samplerText">どれを選べばいいか迷ったら、上の「お茶診断」へ。今日の月とあなたの星座が重なる一杯を見つけて、そのまま販売ページへご案内します。</p>
+      <a href="#quiz" class="btn solid" id="samplerCta">お茶診断をはじめる</a>
     </div>
   </div>
 </section>
@@ -459,10 +446,9 @@
 <footer>
   <span class="brand">月詠茶寮 <span class="gold">-TSUKUYOMI SARYO-</span></span>
   本サイトはデモンストレーション用の架空ブランドです。実際の決済・配送は行われません。<br>
+  <span class="disclaimer">※本サイトはセレクト紹介であり、販売は各リンク先ストアで行われます。</span>
   © 2026 Tsukuyomi Saryo. All rights reserved.
 </footer>
-
-<div class="toast" id="toast">カートに追加しました</div>
 
 <script>
 /* =====================================================
@@ -570,21 +556,37 @@ const todaysPhase = renderMoon();
 ===================================================== */
 const TEAS = [
   { id:'shinmagetsu', icon:'🌑', name:'新月ブレンド', zodiac:'天秤座・水瓶座向け',
-    desc:'クロモジと玄米の香ばしさ。何かを始めたい夜に。', tags:['巡り','始まり'], price:1800 },
+    desc:'森の中にいるような清々しい香りの国産クロモジ茶。何かを始めたい夜に。', tags:['巡り','始まり'],
+    product:'ふくぎ茶・木茶（クロモジ茶）3袋セット', brand:'さくらの家', store:'楽天で見る',
+    url:'https://item.rakuten.co.jp/jigemonshop/fukugi_moku/' },
   { id:'mangetsu-camomile', icon:'🌕', name:'満月カモミール', zodiac:'牡牛座・魚座向け',
-    desc:'満ちた月の夜、頑張った心をそっとほどく一杯。', tags:['眠り','安らぎ'], price:1600 },
-  { id:'saffron-rose', icon:'🦂', name:'蠍座のサフランローズ', zodiac:'蠍座・獅子座向け',
-    desc:'サフランとローズの深紅。情熱を静かに灯す味わい。', tags:['美容','情熱'], price:2800 },
-  { id:'ginger-citrus', icon:'🐏', name:'牡羊座のジンジャーシトラス', zodiac:'牡羊座向け',
-    desc:'生姜と柑橘のきりっとした目覚め。巡りをよくする一杯。', tags:['巡り','集中'], price:1400 },
-  { id:'mint-bergamot', icon:'👯', name:'双子座のミントベルガモット', zodiac:'双子座・射手座向け',
-    desc:'ミントとベルガモットの軽やかな香り。頭をすっきりと。', tags:['集中','軽やか'], price:1200 },
-  { id:'gessho-milktea', icon:'🦀', name:'蟹座の月桃ミルクティー', zodiac:'蟹座向け',
-    desc:'月桃とミルクのやさしい甘さ。安心して眠りにつく夜に。', tags:['眠り','安らぎ'], price:2000 },
-  { id:'camomile-ginger', icon:'🌾', name:'乙女座のカモミールジンジャー', zodiac:'乙女座向け',
-    desc:'カモミールと生姜で、胃腸からじんわり整える一杯。', tags:['胃腸','整える'], price:1500 },
-  { id:'kuromame-hoji', icon:'🐐', name:'山羊座の黒豆ほうじ茶', zodiac:'山羊座向け',
-    desc:'香ばしいほうじ茶と黒豆の滋味。静かな落ち着きを。', tags:['巡り','落ち着き'], price:1700 }
+    desc:'りんごを思わせる甘い香りのオーガニックカモミール。頑張った心をそっとほどく一杯。', tags:['眠り','安らぎ'],
+    product:'有機カモマイル・ジャーマン100g', brand:'生活の木', store:'Amazonで見る',
+    url:'https://www.amazon.co.jp/dp/B079M5BBY1' },
+  { id:'kani-tsukiyo-milktea', icon:'🦀', name:'蟹座の月夜ミルクティー', zodiac:'蟹座向け',
+    desc:'優しい甘さのオーガニックルイボス。ミルクを注ぐとやわらかな味わいに、安心して眠りにつく夜に。', tags:['眠り','安らぎ'],
+    product:'オーガニック ルイボス グリーン', brand:'ルピシア', store:'LUPICIAで見る',
+    url:'https://www.lupicia.com/shop/g/g12409001/' },
+  { id:'noboru-taiyo', icon:'☀️', name:'昇る太陽の一服（集中）', zodiac:'獅子座・牡羊座向け',
+    desc:'抹茶の旨みをどこでも一杯ずつ。頭をすっきりさせたい朝に。', tags:['集中','軽やか'],
+    product:'お～いお茶 抹茶入り緑茶 粉末スティック100本', brand:'伊藤園', store:'楽天で見る',
+    url:'https://item.rakuten.co.jp/rakuten24/e351380h/' },
+  { id:'meguri-ginger-lemon', icon:'🐏', name:'巡りの生姜レモン', zodiac:'牡羊座向け',
+    desc:'生姜のきりっとした辛みとレモンの酸味。巡りをよくする一杯。', tags:['巡り','集中'],
+    product:'ジンジャー&レモン 20袋', brand:'ポンパドール', store:'Amazonで見る',
+    url:'https://www.amazon.co.jp/dp/B00BBVV2CC' },
+  { id:'kinsei-rosehip', icon:'🌺', name:'金星のローズヒップ', zodiac:'蠍座・獅子座向け',
+    desc:'ルビー色の水色と爽やかな酸味。静かに情熱を灯す味わい。', tags:['美容','情熱'],
+    product:'ローズヒップ&ハイビスカスティー 150g/30包', brand:'彩香', store:'楽天で見る',
+    url:'https://item.rakuten.co.jp/chinatea/1251000001/' },
+  { id:'nagi-gettocha', icon:'🌾', name:'凪の月桃茶', zodiac:'乙女座向け',
+    desc:'沖縄で親しまれる月桃の、すっきり上品な香り。胃腸からじんわり整える一杯。', tags:['胃腸','整える'],
+    product:'天草産月桃茶（無農薬）30包', brand:'メルシープレゼント', store:'楽天で見る',
+    url:'https://item.rakuten.co.jp/merci-p/se-4012/' },
+  { id:'yoake-lemongrass', icon:'🐐', name:'夜明けのレモングラス', zodiac:'山羊座向け',
+    desc:'レモングラスの爽快感とミントの清涼感。静かな落ち着きを。', tags:['巡り','落ち着き'],
+    product:'レモングラス×ペパーミント ブレンド12包', brand:'マルシェピュア', store:'楽天で見る',
+    url:'https://item.rakuten.co.jp/marche-pure/tp021-12/' }
 ];
 
 function renderTeas(highlightId){
@@ -600,51 +602,17 @@ function renderTeas(highlightId){
       ${isHighlight ? '<div class="badge">今日のあなたに</div>' : ''}
       <div class="tea-icon">${tea.icon}</div>
       <h4>${tea.name}</h4>
+      <p class="product-name">${tea.product}（${tea.brand}）</p>
       <p class="zodiac">${tea.zodiac}</p>
       <p class="desc">${tea.desc}</p>
       <div class="tea-tags">${tea.tags.map(t=>`<span>#${t}</span>`).join('')}</div>
-      <p class="price">¥${tea.price.toLocaleString()}</p>
-      <button class="add-btn" data-id="${tea.id}">カートに入れる</button>
+      <a class="add-btn" href="${tea.url}" target="_blank" rel="noopener">${tea.store}</a>
+      <p class="buy-note">価格は販売ページでご確認ください</p>
     `;
     grid.appendChild(card);
   });
-  bindAddButtons();
 }
 renderTeas(null);
-
-/* =====================================================
-   3. カート
-===================================================== */
-let cartCount = 0;
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(showToast._timer);
-  showToast._timer = setTimeout(()=>t.classList.remove('show'), 1800);
-}
-function addToCart(label, btn){
-  cartCount++;
-  document.getElementById('cart-count').textContent = 'カート ' + cartCount;
-  showToast(label + ' をカートに入れました');
-  if(btn){
-    btn.classList.add('added');
-    const original = btn.textContent;
-    btn.textContent = '追加済み ✓';
-    setTimeout(()=>{ btn.classList.remove('added'); btn.textContent = original; }, 1400);
-  }
-}
-function bindAddButtons(){
-  document.querySelectorAll('.add-btn').forEach(btn=>{
-    btn.onclick = ()=>{
-      const tea = TEAS.find(t=>t.id === btn.dataset.id);
-      addToCart(tea.name, btn);
-    };
-  });
-}
-document.getElementById('addSampler').addEventListener('click', function(){
-  addToCart('3種お試しサンプラー', this);
-});
 
 /* =====================================================
    4. 星座算出（生まれ月ベースの簡略版）
@@ -656,10 +624,10 @@ const ZODIAC_BY_MONTH = {
   7:'蟹座', 8:'獅子座', 9:'乙女座', 10:'天秤座', 11:'蠍座', 12:'射手座'
 };
 const ZODIAC_TO_TEA = {
-  '牡羊座':'ginger-citrus', '牡牛座':'mangetsu-camomile', '双子座':'mint-bergamot',
-  '蟹座':'gessho-milktea', '獅子座':'saffron-rose', '乙女座':'camomile-ginger',
-  '天秤座':'shinmagetsu', '蠍座':'saffron-rose', '射手座':'mint-bergamot',
-  '山羊座':'kuromame-hoji', '水瓶座':'shinmagetsu', '魚座':'mangetsu-camomile'
+  '牡羊座':'meguri-ginger-lemon', '牡牛座':'mangetsu-camomile', '双子座':'noboru-taiyo',
+  '蟹座':'kani-tsukiyo-milktea', '獅子座':'kinsei-rosehip', '乙女座':'nagi-gettocha',
+  '天秤座':'shinmagetsu', '蠍座':'kinsei-rosehip', '射手座':'noboru-taiyo',
+  '山羊座':'yoake-lemongrass', '水瓶座':'shinmagetsu', '魚座':'mangetsu-camomile'
 };
 
 /* =====================================================
@@ -697,7 +665,7 @@ document.getElementById('quizBack').addEventListener('click', ()=>{
 document.getElementById('showResult').addEventListener('click', ()=>{
   const month = document.getElementById('birthMonth').value;
   if(!month){
-    showToast('生まれ月を選んでください');
+    alert('生まれ月を選んでください');
     return;
   }
   quizAnswers.month = parseInt(month, 10);
@@ -751,11 +719,30 @@ function runDivination(){
       }
     });
   };
+
+  // サンプラーCTAを診断結果のおすすめ1種の販売ページへ誘導する形に更新
+  const samplerCta = document.getElementById('samplerCta');
+  document.getElementById('samplerTitle').textContent = 'まず一杯から';
+  document.getElementById('samplerText').textContent =
+    `今日のあなたには「${winner.name}」（${winner.product}・${winner.brand}）が重なりました。まずはこの一杯から試してみてください。`;
+  samplerCta.textContent = winner.store;
+  samplerCta.href = winner.url;
+  samplerCta.target = '_blank';
+  samplerCta.rel = 'noopener';
 }
 
 document.getElementById('retryQuiz').addEventListener('click', ()=>{
   quizAnswers.mood = null; quizAnswers.body = null; quizAnswers.wish = null; quizAnswers.month = null;
   document.getElementById('birthMonth').value = '';
+  renderTeas(null);
+  const samplerCta = document.getElementById('samplerCta');
+  document.getElementById('samplerTitle').textContent = 'まず一杯から';
+  document.getElementById('samplerText').textContent =
+    'どれを選べばいいか迷ったら、上の「お茶診断」へ。今日の月とあなたの星座が重なる一杯を見つけて、そのまま販売ページへご案内します。';
+  samplerCta.textContent = 'お茶診断をはじめる';
+  samplerCta.href = '#quiz';
+  samplerCta.removeAttribute('target');
+  samplerCta.removeAttribute('rel');
   goToStep(0);
 });
 </script>
